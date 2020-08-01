@@ -1,0 +1,29 @@
+html, body {
+    font-family: -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
+    font-size: 16px;
+    height: 100%;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+    transition: .5s;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.gm-scrollbar .thumb {
+    background-color: transparent !important;
+}
+
+.gm-scrollbar.-vertical {
+    background-color: transparent !important;
+    border: none;
+}
+
+/* horizontal scrollbar track */
+.gm-scrollbar.-horizontal {
+    border: none;
+    background-color: transparent !important;
+}
+
+
