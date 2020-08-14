@@ -1,11 +1,11 @@
 module.exports = {
     lintOnSave: false,
-    configureWebpack: {
-        externals: {
-            'vue': 'Vue',
-            'element-ui': 'ELEMENT',
-        }
-    },
+    // configureWebpack: {
+    //     externals: {
+    //         'vue': 'Vue',
+    //         'element-ui': 'ELEMENT',
+    //     }
+    // },
     // publicPath: './',
     // productionSourceMap: false,
     // devServer: {
