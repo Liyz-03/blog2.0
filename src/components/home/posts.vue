@@ -52,7 +52,7 @@
                 });
                 console.log(result)
                 if (result.data.code === 200) {
-                    this.posts = result.data.posts;
+                    this.posts = result.data.data;
                     console.log(this.posts);
                 } else {
                     this.$notify.error('文章加载失败!');
@@ -65,7 +65,7 @@
                 });
                 console.log(result);
                 if (result.data.code === 200) {
-                    this.posts = result.data.posts;
+                    this.posts = result.data.data;
                     console.log(this.posts)
                 } else {
                     this.$notify.error('文章加载失败!');
@@ -82,7 +82,7 @@
                     });
                     console.log(result)
                     if (result.data.code === 200) {
-                        this.posts = result.data.posts;
+                        this.posts = result.data.data;
                         console.log(this.posts);
                     } else {
                         this.$notify.error('文章加载失败!');
@@ -94,7 +94,7 @@
                     });
                     console.log(result);
                     if (result.data.code === 200) {
-                        this.posts = result.data.posts;
+                        this.posts = result.data.data;
                         console.log(this.posts)
                     } else {
                         this.$notify.error('文章加载失败!');

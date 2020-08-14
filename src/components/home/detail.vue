@@ -20,7 +20,7 @@
             });
             console.log(result)
             if (result.data.code == 200) {
-                this.post = result.data.post;
+                this.post = result.data.data;
             } else {
                 this.$message.error("加载失败,请刷新。。。")
             }
