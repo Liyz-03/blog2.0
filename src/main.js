@@ -42,9 +42,14 @@ Vue.use(Axios)
 // Axios.defaults.baseURL = 'http://192.168.43.228:8888';
 
 const axiosInstance = Axios.create({
+<<<<<<< HEAD
     baseURL : 'http://106.54.224.61:8888',
      // baseURL : 'http://123.57.41.144:8888',
     // baseURL : 'http://127.0.0.1:8888',
+=======
+   
+    baseURL : 'http://127.0.0.1:8888',
+>>>>>>> 4d6712695ce936826f62375813862f0ae294a54f
 });
 Vue.prototype.$http = axiosInstance;
 
