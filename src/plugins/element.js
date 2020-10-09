@@ -1,6 +1,7 @@
-import Vue from 'vue';
+import Vue from 'vue'
 import 'element-ui/lib/theme-chalk/index.css';
 import {
+    DatePicker,
     TimelineItem,
     Timeline,
     Button,
@@ -40,6 +41,7 @@ import {
 } from 'element-ui';
 
 
+Vue.use(DatePicker)
 Vue.use(Button);
 Vue.use(Form);
 Vue.use(FormItem);

@@ -2,7 +2,8 @@
     <div>
         <div>
             <div><!--                        <div class="article"></div>-->
-                <div v-for="post in posts" @click="toDetail(post.post_id)" class="article-detail" index="post.post_id">
+                <div v-for="post in posts" @click="toDetail(post.post_id)" class="article-detail"
+                     index="post.post_id">
                     <div v-text="post.post_title" class="article-title"></div>
                     <div v-text="post.post_description" class="article-content">
                     </div>
@@ -14,99 +15,102 @@
         </div>
 
         <div style="text-align: center;">
-<!--            <el-pagination-->
-<!--                :hide-on-single-page="true"-->
-<!--                :page-size="5"-->
-<!--                :page-count="3"-->
-<!--                :current-page="1"-->
-<!--                layout="prev, pager, next"-->
-<!--                :total="posts.length">-->
-<!--            </el-pagination>-->
+            <!--            <el-pagination-->
+            <!--                :hide-on-single-page="true"-->
+            <!--                :page-size="5"-->
+            <!--                :page-count="3"-->
+            <!--                :current-page="1"-->
+            <!--                layout="prev, pager, next"-->
+            <!--                :total="posts.length">-->
+            <!--            </el-pagination>-->
         </div>
     </div>
 </template>
 
 <script>
-    import {formatDate} from '../../plugins/formatDate'
+    import { formatDate } from '../../plugins/formatDate'
 
     export default {
         name: 'posts',
         filters: {
-            ToFormatDate(time) {
-                let date = new Date(time);
-                return formatDate(date, 'yyyy-MM-dd');
+            ToFormatDate (time) {
+                let date = new Date(time)
+                return formatDate(date, 'yyyy-MM-dd')
             }
 
         },
-        data() {
+        data () {
             return {
                 posts: []
             }
         },
-        async created() {
-            let categoryId = this.$route.params.categoryId;
+        async created () {
+            let categoryId = this.$route.params.categoryId
             if (categoryId !== null && categoryId !== undefined) {
                 let result = await this.$http({
-                    url: '/home/findAllPostsByCategoryId?id=' + categoryId,
+                    url: '/home/findAllPublicPostByCategoryId?id=' + categoryId,
                     method: 'GET'
-                });
+                })
                 console.log(result)
                 if (result.data.code === 200) {
-                    this.posts = result.data.data;
-                    console.log(this.posts);
+                    this.posts = result.data.data
+                    console.log(this.posts)
                 } else {
-                    this.$notify.error('文章加载失败!');
+                    this.$notify.error('文章加载失败!')
                 }
             }
             if (categoryId === null || categoryId === undefined) {
                 let result = await this.$http({
                     url: '/home/findAllPosts',
                     method: 'get'
-                });
-                console.log(result);
+                })
+                console.log(result)
                 if (result.data.code === 200) {
-                    this.posts = result.data.data;
+                    this.posts = result.data.data
                     console.log(this.posts)
                 } else {
-                    this.$notify.error('文章加载失败!');
+                    this.$notify.error('文章加载失败!')
                 }
             }
         },
         watch: {
-            async $route(to, from) {
-                let categoryId = this.$route.params.categoryId;
+            async $route (to, from) {
+                let categoryId = this.$route.params.categoryId
                 if (categoryId !== null && categoryId !== undefined) {
                     let result = await this.$http({
-                        url: '/home/findAllPostsByCategoryId?id=' + categoryId,
+                        url: '/home/findAllPublicPostByCategoryId?id=' + categoryId,
                         method: 'GET'
-                    });
+                    })
                     console.log(result)
                     if (result.data.code === 200) {
-                        this.posts = result.data.data;
-                        console.log(this.posts);
+                        this.posts = result.data.data
+                        console.log(this.posts)
                     } else {
-                        this.$notify.error('文章加载失败!');
+                        this.$notify.error('文章加载失败!')
                     }
                 } else {
                     let result = await this.$http({
                         url: '/home/findAllPosts',
                         method: 'get'
-                    });
-                    console.log(result);
+                    })
+                    console.log(result)
                     if (result.data.code === 200) {
-                        this.posts = result.data.data;
+                        this.posts = result.data.data
                         console.log(this.posts)
                     } else {
-                        this.$notify.error('文章加载失败!');
+                        this.$notify.error('文章加载失败!')
                     }
                 }
             }
         },
         methods: {
-            toDetail(index) {
-                console.log("hello")
+            toDetail (index) {
+                console.log('hello')
                 // this.$router.push({path:'/home/detail/'+1})
-                this.$router.push({name: 'detail', params: {index: index}})
+                this.$router.push({
+                    name: 'detail',
+                    params: { index: index }
+                })
             }
         }
     }

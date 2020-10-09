@@ -172,7 +172,7 @@
                 });
                 console.log(result)
                 if (result.data.code === 200) {
-                    this.tableData = result.data.posts;
+                    this.tableData = result.data.data;
                 } else {
                     this.$notify.error("获取文章失败！")
                 }

@@ -14,20 +14,20 @@
 
 <script>
     export default {
-        name: "timeline",
-        async created() {
+        name: 'timeline',
+        async created () {
             let result = await this.$http({
-                url:'/home/findAllLog',
-                method:'GET'
-            });
+                url: '/home/findAllLog',
+                method: 'GET'
+            })
             console.log(result.data)
-            if(result.data.code == 200){
-                this.lineData = result.data.data;
-            }else {
-                this.$notify.error("获取失败");
+            if (result.data.code == 200) {
+                this.lineData = result.data.data
+            } else {
+                this.$notify.error('获取失败')
             }
         },
-        data() {
+        data () {
             return {
                 lineData: []
             }

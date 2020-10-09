@@ -24,6 +24,8 @@ Vue.use(Editor)
 
 //导入element ui
 import './plugins/element';
+
+
 //注册滚动条
 import GeminiScrollbar from 'vue-gemini-scrollbar'
 
@@ -40,8 +42,9 @@ Vue.use(Axios)
 // Axios.defaults.baseURL = 'http://192.168.43.228:8888';
 
 const axiosInstance = Axios.create({
-    // baseURL : 'http://106.54.224.61:8888',
-    baseURL : 'http://127.0.0.1:8888',
+    baseURL : 'http://106.54.224.61:8888',
+     // baseURL : 'http://123.57.41.144:8888',
+    // baseURL : 'http://127.0.0.1:8888',
 });
 Vue.prototype.$http = axiosInstance;
 
@@ -57,10 +60,11 @@ axiosInstance.interceptors.response.use(config=>{
     return config
 })
 
+Vue.config.productionTip = true
 
 
 
-Vue.config.productionTip = false
+
 
 new Vue({
   router,

@@ -5,13 +5,15 @@
             <div id="liuyan-editor">
                 <div id="editor-bar">
                     <div>
+                        <!--                        备案期间不开发留言-->
                         <mavon-editor
+                            :editable="false"
                             id="editing"
                             :autofocus="false"
                             :boxShadow="false"
                             :ishljs="true"
                             defaultOpen="edit"
-                            placeholder="支持Markdown编写留言。。。"
+                            placeholder="当前不支持留言。。。"
                             :toolbarsFlag="false"
                             :navigation="false"
                             v-model="editLiuYan.UserContent"/>
@@ -26,7 +28,8 @@
                 <form>
                     <div id="liuyan-right">
                         <div id="liuyan-nickname">
-                            <input v-on:blur="getQQtx" v-model:value="editLiuYan.UserQQ" type="text" placeholder="你的qq">
+                            <input v-on:blur="getQQtx" v-model:value="editLiuYan.UserQQ" type="text"
+                                   placeholder="你的qq">
                         </div>
                         <div>
                             <input v-model:value="editLiuYan.UserNickName" type="text" :disabled="isreturn"
@@ -40,7 +43,8 @@
                             <input v-model:value="editLiuYan.UserBlog" type="text" placeholder="你的博客站点">
                         </div>
                         <div @click="sendLY" id="liuyan-submit">
-                            <div> 发布</div>
+                            <!--                            不开放留言-->
+                            <div> 不开放留言</div>
                         </div>
                     </div>
                 </form>
@@ -80,17 +84,17 @@
 
 
     export default {
-        name: "liuyan",
-        async created() {
-            let result = await this.$http.get("/home/findAllLiuyans");
+        name: 'liuyan',
+        async created () {
+            let result = await this.$http.get('/home/findAllLiuyans')
             console.log(result)
             if (result.data.code == 200) {
-                this.liuyans = result.data.data;
+                this.liuyans = result.data.data
             } else {
-                this.$notify.error(result.data.msg);
+                this.$notify.error(result.data.msg)
             }
         },
-        data() {
+        data () {
             return {
                 editLiuYan: {
                     UserQQ: '',
@@ -117,64 +121,64 @@
             }
         },
         methods: {
-            getBlogAddress(liuyan) {
-                return "http://" + liuyan;
+            getBlogAddress (liuyan) {
+                return 'http://' + liuyan
             },
 
             //发送留言
-            async sendLY() {
-                if (this.editLiuYan.UserContent === "") {
+            async sendLY () {
+                if (this.editLiuYan.UserContent === '') {
                     //留言内容为空
-                    this.$notify.error("留言内容为空")
-                    return false;
+                    this.$notify.error('留言内容为空')
+                    return false
                 }
-                let emailRule = /^[a-z\d]+(\.[a-z\d]+)*@([\da-z](-[\da-z])?)+(\.{1,2}[a-z]+)+$/;
+                let emailRule = /^[a-z\d]+(\.[a-z\d]+)*@([\da-z](-[\da-z])?)+(\.{1,2}[a-z]+)+$/
                 if (!emailRule.test(this.editLiuYan.UserEmail)) {
                     //邮箱格式错误
-                    this.$notify.error("邮箱输入错误")
-                    return false;
+                    this.$notify.error('邮箱输入错误')
+                    return false
 
                 }
 
                 console.log(this.editLiuYan)
                 let result = await this.$http({
-                    url: "/home/saveLiuYan",
+                    url: '/home/saveLiuYan',
                     method: 'POST',
                     data: this.editLiuYan,
-                });
-                console.log(result);
+                })
+                console.log(result)
                 if (result.data.code === 200) {
-                    this.$notify.success("留言成功");
-                    this.liuyans = result.data.data;
+                    this.$notify.success('留言成功')
+                    this.liuyans = result.data.data
                     this.editLiuYan = {}
                 } else {
-                    this.$notify.error(result.data.msg);
+                    this.$notify.error(result.data.msg)
                 }
 
             },
 
             //根据输入qq号获取相关信息
-            async getQQtx() {
+            async getQQtx () {
                 if (this.editLiuYan.UserQQ === '') {
                     //https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png
-                    this.$refs.UserQQTX.style.backgroundImage = "url(https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png)"
+                    this.$refs.UserQQTX.style.backgroundImage = 'url(https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png)'
                 } else {
-                    this.isreturn = true;
+                    this.isreturn = true
                     let result = await this.$http({
-                            url: '/home/findQQInfor?qq=' + this.editLiuYan.UserQQ,
-                            method: 'get',
-                        })
-                    ;
+                        url: '/home/findQQInfor?qq=' + this.editLiuYan.UserQQ,
+                        method: 'get',
+                    })
+
                     console.log(result)
                     if (result.data.success === true && result.data !== null) {
-                        this.editLiuYan.UserTX = "http://q2.qlogo.cn/headimg_dl?dst_uin=" + this.editLiuYan.UserQQ + "&spec=100";
-                        this.editLiuYan.UserNickName = result.data.name;
-                        this.editLiuYan.UserEmail = result.data.qemail;
-                        this.$refs.UserQQTX.style.backgroundImage = "url(http://q2.qlogo.cn/headimg_dl?dst_uin=" + this.editLiuYan.UserQQ + "&spec=100)"
-                        this.isreturn = false;
+                        this.editLiuYan.UserTX = 'http://q2.qlogo.cn/headimg_dl?dst_uin=' + this.editLiuYan.UserQQ + '&spec=100'
+                        this.editLiuYan.UserNickName = result.data.name
+                        this.editLiuYan.UserEmail = result.data.qemail
+                        this.$refs.UserQQTX.style.backgroundImage = 'url(http://q2.qlogo.cn/headimg_dl?dst_uin=' + this.editLiuYan.UserQQ + '&spec=100)'
+                        this.isreturn = false
                     } else {
-                        this.$notify.error("获取信息失败");
-                        this.isreturn = false;
+                        this.$notify.error('获取信息失败')
+                        this.isreturn = false
                     }
                 }
             },

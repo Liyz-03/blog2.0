@@ -13,20 +13,20 @@
 <script>
     export default {
         name: 'detail',
-        async created() {
+        async created () {
             let result = await this.$http({
                 url: '/home/findPostById?id=' + this.$route.params.index,
                 method: 'get',
-            });
+            })
             console.log(result)
             if (result.data.code == 200) {
-                this.post = result.data.data;
+                this.post = result.data.data
             } else {
-                this.$message.error("加载失败,请刷新。。。")
+                this.$message.error('加载失败,请刷新。。。')
             }
 
         },
-        data() {
+        data () {
             return {
                 post: {},
             }

@@ -2,17 +2,16 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 //导出admin根组件
-import Admin from '../components/admin'
-import Login from '../components/admin/login'
-import Index from '../components/admin/index'
-import Total from '../components/admin/total'
-import Write from '../components/admin/write'
-import Modify from '../components/admin/modify'
-import Category from '../components/admin/cotagory'
-import Mywords from '../components/admin/mywords'
-import AdminLiuyan from '../components/admin/liuyan'
-import ATimeline from '../components/admin/timeline'
-
+const Admin = () => import('../components/admin')
+const Login = () => import('../components/admin/login')
+const Index = () => import('../components/admin/index')
+const Total = () => import( '../components/admin/total')
+const Write = () => import( '../components/admin/write')
+const Modify = () => import( '../components/admin/modify')
+const Category = () => import( '../components/admin/cotagory')
+const Mywords = () => import( '../components/admin/mywords')
+const AdminLiuyan = () => import( '../components/admin/liuyan')
+const ATimeline = () => import( '../components/admin/timeline')
 
 Vue.use(VueRouter)
 
@@ -20,13 +19,12 @@ Vue.use(VueRouter)
 import Markdown from '../components/markdown'
 //---------------------------------------------------
 //导出home的根组件
-import Home from '../components/home'
-import Post from '../components/home/posts'
-import Timeline from '../components/home/timeline'
-import Detail from '../components/home/detail'
-import Liuyan from '../components/home/liuyan'
-import PL from '../components/pl'
-
+const Home = () => import( '../components/home')
+const Post = () => import( '../components/home/posts')
+const Timeline = () => import( '../components/home/timeline')
+const Detail = () => import('../components/home/detail')
+const Liuyan = () => import('../components/home/liuyan')
+const PL = () => import( '../components/pl')
 
 const routes = [
     {
@@ -49,16 +47,30 @@ const routes = [
         component: Home,
         redirect: '/home/index',
         children: [{
-            path: '/home/index', component: Post
-        },{
-            path: '/home/index/:categoryId', component: Post
+            path: '/home/index',
+            component: Post,
+            meta:{
+                title:'我的学习分享',
+                keywords:'coderlyz',
+                description:'coderlyz的个人网站，个人的学习记录和学习问题以及解决方式的记录与分享'
+            }
+
+
         }, {
-            path: '/home/timeline', component: Timeline
+            path: '/home/index/:categoryId',
+            component: Post
         }, {
-            path: '/home/detail/:index', name: 'detail', component: Detail
+            path: '/home/timeline',
+            component: Timeline
+        }, {
+            path: '/home/detail/:index',
+            name: 'detail',
+            component: Detail
         },
             {
-                path: '/home/liuyan', name: 'liuyan', component: Liuyan
+                path: '/home/liuyan',
+                name: 'liuyan',
+                component: Liuyan
             }]
     },
     //admin根组件
@@ -69,7 +81,9 @@ const routes = [
         redirect: '/admin/login',
         children: [
             {
-                name: 'login', path: '/admin/login', component: Login
+                name: 'login',
+                path: '/admin/login',
+                component: Login
             },
             {
                 name: 'index',
@@ -77,19 +91,35 @@ const routes = [
                 component: Index,
                 redirect: '/admin/index/total',
                 children: [{
-                    name: 'total', path: '/admin/index/total', component: Total
+                    name: 'total',
+                    path: '/admin/index/total',
+                    component: Total
                 }, {
-                    name: 'write', path: '/admin/index/write', component: Write
+                    name: 'write',
+                    path: '/admin/index/write',
+                    component: Write
                 }, {
-                    name: 'modify', path: '/admin/index/modify', component: Modify
+                    name: 'modify',
+                    path: '/admin/index/modify',
+                    component: Modify
                 }, {
-                    name: 'category', path: '/admin/index/category', component: Category
+                    name: 'category',
+                    path: '/admin/index/category',
+                    component: Category
                 }, {
-                    name: 'mywords', path: '/admin/index/mywords', component: Mywords
+                    name: 'mywords',
+                    path: '/admin/index/mywords',
+                    component: Mywords
                 }, {
-                    name: 'liuyan', path: '/admin/index/liuyan', component: AdminLiuyan
+                    name: 'liuyan',
+                    path: '/admin/index/liuyan',
+                    component: AdminLiuyan
                 },
-                    {name: 'timeline', path: '/admin/index/timeline', component: ATimeline}
+                    {
+                        name: 'timeline',
+                        path: '/admin/index/timeline',
+                        component: ATimeline
+                    }
                 ]
             },
         ]
@@ -102,17 +132,26 @@ const router = new VueRouter({
 })
 //挂载路由导航守卫
 router.beforeEach((to, from, next) => {
-    const token = window.sessionStorage.getItem('token');
+    const token = window.sessionStorage.getItem('token')
     // console.log(to.path)
     //如果未登录就访问后台页面
     if ((to.path === '/admin/index/total' || to.path === '/admin/index/write' || to.path === '/admin/index/modify' || to.path === '/admin/index/category' || to.path === '/admin/index/mywords' || to.path === '/admin/index/liuyan' || to.path === '/admin/index/timeline') && token === null) {
-        next('/admin/login');
-    }
-   else {
-        next();
+        next('/admin/login')
+    } else {
+        /* 路由发生变化修改页面title */
+        if (to.meta.title) {
+            document.title = to.meta.title
+        }
+        /* 路由发生变化修改页面的description */
+        if(to.meta.description){
+            // document.querySelector('meta[name="Keywords"]').setAttribute('content', to.meta.keywords)
+            // document.querySelector('meta[name="Description"]').setAttribute('content', to.meta.description)
+            // document.description = to.meta.description
+            console.log('路由发生变化修改页面的description')
+        }
+        next()
     }
 
 })
-
 
 export default router

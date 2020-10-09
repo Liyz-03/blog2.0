@@ -2,7 +2,7 @@
     <div class="login-container">
         <div class="login-box">
             <div class="avatar-box">
-                <img src="../../assets/QQ头像.gif">
+                <img src="../../assets/qqheader.gif">
             </div>
             <el-form ref="loginFormRef" class="el-form" :model="formData" :rules="loginRules">
                 <el-form-item label="" prop="email">

@@ -131,7 +131,7 @@
                 });
                 console.log(result.data)
                 if (result.data.code == 200) {
-                    this.lineData = result.data.logs;
+                    this.lineData = result.data.data;
                 } else {
                     this.$notify.error("获取失败");
                 }

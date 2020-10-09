@@ -43,7 +43,8 @@
                         <div class="sider-content">
                             <span>{{words}}</span>
                             <span id="sider-icon-1">
-                                <span><a href="tencent://message/?uin=1970782037&Site=&Menu=yes"><i style="margin-left: 18px" class="fa fa-qq" aria-hidden="true"></i></a></span>
+                                <span><a href="tencent://message/?uin=1970782037&Site=&Menu=yes"><i
+                                    style="margin-left: 18px" class="fa fa-qq" aria-hidden="true"></i></a></span>
                                     <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
                                     <span><i style="font-size: 24px" class="fa fa-github" aria-hidden="true"></i></span>
                                 </span>
@@ -67,7 +68,7 @@
             <div id="header-log">
                 <router-link style="display: block;width:100%;height:100%;font-size: 18px;color: inherit"
                              to="/admin/login">
-                    <!--                <img src="../assets/QQ头像.gif" alt="">-->
+                    <!--                <img src="../assets/qqheader.gif" alt="">-->
                 </router-link>
             </div>
             <div id="header-right">
@@ -122,9 +123,11 @@
                             <div class="sider-content">
                                 <span>{{words}}</span>
                                 <div id="sider-icon">
-                                    <span><a href="tencent://message/?uin=1970782037&Site=&Menu=yes"><i class="fa fa-qq" aria-hidden="true"></i></a></span>
+                                        <span><a href="tencent://message/?uin=1970782037&Site=&Menu=yes"><i
+                                            class="fa fa-qq" aria-hidden="true"></i></a></span>
                                     <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                                    <span><i style="font-size: 20px" class="fa fa-github" aria-hidden="true"></i></span>
+                                    <span><i style="font-size: 20px" class="fa fa-github"
+                                             aria-hidden="true"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -143,12 +146,16 @@
             <GeminiScrollbar
                 class="my-scroll-bar" :autoshow="true">
                 <div id="blog-content">
-                    <router-view/>
+
+                    <transition name="fade-transform" mode="out-in">
+                        <router-view/>
+                    </transition>
                 </div>
             </GeminiScrollbar>
         </div>
 
     </div>
+
 </template>
 
 <script>
@@ -174,44 +181,43 @@
         // },
         created: async function () {
 
-
             let wordsResult = await this.$http({
-                url:'/home/findMywords',
-                method:'GET'
-            });
-            console.log(wordsResult);
-            if(wordsResult.data.code === 200){
-                this.words = wordsResult.data.data.mywords_content;
+                url: '/home/findMywords',
+                method: 'GET'
+            })
+            console.log(wordsResult)
+            if (wordsResult.data.code === 200) {
+                this.words = wordsResult.data.data.mywords_content
             }
 
             //访问记录
-            let isVisiting = window.sessionStorage.getItem("ISVISITING");
+            let isVisiting = window.sessionStorage.getItem('ISVISITING')
             if (isVisiting === null) {
                 let result = await this.$http({
                     url: '/home/setALogCaicai',
                     method: 'post',
                     data: {
-                        'ip': returnCitySN["cip"],
-                        'city': returnCitySN["cname"],
+                        'ip': returnCitySN['cip'],
+                        'city': returnCitySN['cname'],
                         'browser': navigator.userAgent
                     }
-                });
+                })
                 console.log(result)
                 if (result.data.code === 200) {
-                    window.sessionStorage.setItem("ISVISITING", "YES")
+                    window.sessionStorage.setItem('ISVISITING', 'YES')
                 }
             }
             //获得统计人数
             let ResultCaicai = await this.$http({
                 url: '/home/findAllLogCaicai',
                 method: 'get'
-            });
+            })
             console.log(ResultCaicai)
             if (ResultCaicai.data.code === 200) {
-                this.caicai = ResultCaicai.data.data.caicaitotal;
+                this.caicai = ResultCaicai.data.data.caicaitotal
                 this.liuyanTotal = ResultCaicai.data.data.liuyantotal
             } else {
-                this.$notify.error('获得统计人数失败！');
+                this.$notify.error('获得统计人数失败！')
             }
             //获取分类
             let ResultCatagory = await this.$http({
@@ -220,17 +226,17 @@
             })
             console.log(ResultCatagory)
             if (ResultCatagory.data.code === 200) {
-                this.categorys = ResultCatagory.data.data;
+                this.categorys = ResultCatagory.data.data
             } else {
-                this.$notify.error("获取分类失败");
+                this.$notify.error('获取分类失败')
             }
 
         },
-        mounted() {
+        mounted () {
 
         },
         name: 'home',
-        data() {
+        data () {
             return {
                 caicai: 0,
                 visible: false,
@@ -239,47 +245,47 @@
                 activeName: 'first',
                 liuyanTotal: 0,
                 categorys: [],
-                words:'',
+                words: '',
             }
         }
         ,
         methods: {
             //获取分类跳转地址
-            getDetailAddress(category) {
-                return "/home/index/" + category.category_id;
+            getDetailAddress (category) {
+                return '/home/index/' + category.category_id
             },
             ///home/index/{category.category_id}
 
-            switchColor() {
+            switchColor () {
                 //#sider-select
-                let ESun = document.querySelector("#sun");
-                let ESunClass = ESun.getAttribute("class");
-                let EHome = document.querySelector("#home");
-                let body = document.querySelector("#app");
-                let ESelect = document.querySelector("#sider-select");
-                console.log(body);
-                if (ESunClass == "el-icon-sunny") {
+                let ESun = document.querySelector('#sun')
+                let ESunClass = ESun.getAttribute('class')
+                let EHome = document.querySelector('#home')
+                let body = document.querySelector('#app')
+                let ESelect = document.querySelector('#sider-select')
+                console.log(body)
+                if (ESunClass == 'el-icon-sunny') {
                     //现在时夜晚
-                    ESun.setAttribute("class", "el-icon-moon");
-                    body.style.backgroundColor = 'white';
-                    EHome.style.backgroundColor = 'white';
-                    EHome.style.color = 'black';
-                    ESelect.style.color = 'black';
+                    ESun.setAttribute('class', 'el-icon-moon')
+                    body.style.backgroundColor = 'white'
+                    EHome.style.backgroundColor = 'white'
+                    EHome.style.color = 'black'
+                    ESelect.style.color = 'black'
                 } else {
                     //现在时白天
-                    ESun.setAttribute("class", "el-icon-sunny");
+                    ESun.setAttribute('class', 'el-icon-sunny')
 
-                    body.style.backgroundColor = 'rgb(79,79,79)';
-                    EHome.style.backgroundColor = 'rgb(79,79,79)';
-                    ESelect.style.backgroundColor = 'rgb(79,79,79)';
-                    EHome.style.color = 'white';
-                    ESelect.style.color = 'white';
+                    body.style.backgroundColor = 'rgb(79,79,79)'
+                    EHome.style.backgroundColor = 'rgb(79,79,79)'
+                    ESelect.style.backgroundColor = 'rgb(79,79,79)'
+                    EHome.style.color = 'white'
+                    ESelect.style.color = 'white'
                 }
             }
             ,
         }
     }
-    ;
+
 </script>
 
 <style scoped lang="less">
@@ -330,7 +336,7 @@
                     height: 50px;
                     margin: 0 auto 20px auto;
                     border-radius: 50%;
-                    background-image: url("../assets/QQ头像.gif");
+                    background-image: url("../assets/qqheader.gif");
                     background-repeat: round;
 
                 }
@@ -393,7 +399,7 @@
                 display: block;
                 width: 68px;
                 height: 100%;
-                background-image: url("../assets/QQ头像.gif");
+                background-image: url("../assets/qqheader.gif");
                 background-repeat: round;
 
             }
@@ -588,7 +594,7 @@
                     }
 
                     .blog-footer {
-                        margin: 5px 0;
+                        margin: 15px 0;
                         font-size: 12px;
 
                         .ending {
